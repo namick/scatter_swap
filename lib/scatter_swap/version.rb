@@ -1,0 +1,3 @@
+module ScatterSwap
+  VERSION = "0.0.1"
+end

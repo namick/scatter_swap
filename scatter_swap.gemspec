@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["github@nathanamick.com"]
   gem.description   = %q{ScatterSwap is an integer hash function designed to have zero collisions, achieve avalanche, and be reversible.}
   gem.summary       = %q{Minimal perfect hash function for 10 digit integers}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/namick/scatter_swap"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

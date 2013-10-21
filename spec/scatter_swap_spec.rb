@@ -2,9 +2,16 @@ require 'spec_helper'
 require 'scatter_swap'
 
 describe "#hash" do
-  it "should be 10 digits" do
+  it "should be 10 digits by default" do
     100.times do |integer|
       ScatterSwap.hash(integer).to_s.length.should == 10
+    end
+  end
+
+  it "should accept a length" do
+    100.times do |integer|
+      length = 1 + (integer / 10)
+      ScatterSwap.hash(integer, 0, length).to_s.length.should == length
     end
   end
 
@@ -16,7 +23,7 @@ describe "#hash" do
 
   it "should be reversable" do
     100.times do |integer|
-      hashed = ScatterSwap.hash(integer)
+      hashed = ScatterSwap.hash(integer, 0, 1 + (integer / 10))
       ScatterSwap.reverse_hash(hashed).to_i.should == integer
     end
   end
@@ -84,4 +91,4 @@ describe "#swap" do
       s.working_array.should == original_array
     end
   end
-end  
+end

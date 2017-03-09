@@ -25,7 +25,7 @@ end
 describe "#swapper_map" do
   before do
     @map_set = []
-    s = ScatterSwap::Hasher.new(1)
+    s = ScatterSwap::Hasher.new
     10.times do |digit|
       @map_set.push s.swapper_map(digit)
     end
@@ -45,22 +45,14 @@ describe "#swapper_map" do
 end
 
 describe "#scatter" do
-  it "should return a number different from original" do
-    100.times do |integer|
-      s = ScatterSwap::Hasher.new(integer)
-      original_array = s.working_array
-      s.scatter
-      s.working_array.should_not == original_array
-    end
-  end
-
   it "should be reversable" do
     100.times do |integer|
-      s = ScatterSwap::Hasher.new(integer)
-      original_array = s.working_array.clone
-      s.scatter
-      s.unscatter
-      s.working_array.should == original_array
+      s = ScatterSwap::Hasher.new
+      working_array = s.build_working_array(integer)
+      original_array = working_array.clone
+      scattered_array = s.scatter(working_array)
+      unscattered_array = s.unscatter(scattered_array)
+      unscattered_array.should == original_array
     end
   end
 end
@@ -68,20 +60,22 @@ end
 describe "#swap" do
   it "should be different from original" do
     100.times do |integer|
-      s = ScatterSwap::Hasher.new(integer)
-      original_array = s.working_array.clone
-      s.swap
-      s.working_array.should_not == original_array
+      s = ScatterSwap::Hasher.new
+      working_array = s.build_working_array(integer)
+      original_array = working_array.clone
+      working_array = s.swap(working_array)
+      working_array.should_not == original_array
     end
   end
 
   it "should be reversable" do
     100.times do |integer|
-      s = ScatterSwap::Hasher.new(integer)
-      original_array = s.working_array.clone
-      s.swap
-      s.unswap
-      s.working_array.should == original_array
+      s = ScatterSwap::Hasher.new
+      working_array = s.build_working_array(integer)
+      original_array = working_array.clone
+      swapped_array = s.swap(working_array)
+      unswapped_array = s.unswap(swapped_array)
+      unswapped_array.should == original_array
     end
   end
-end  
+end
